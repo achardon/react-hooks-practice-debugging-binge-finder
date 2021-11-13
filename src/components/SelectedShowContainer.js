@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import Episode from "./Components/Episode";
+import Episode from "./Episode";
 
 function SelectedShowContainer(props) {
-  const selectedSeason = useState(1);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+
+  // console.log(props.allEpisodes)
 
   function mapSeasons() {
-    if (!!props.episodes) {
-      let seasons = props.episodes.map((e) => e.season).unique();
-
+    if (!!props.allEpisodes) {
+      let seasons = props.allEpisodes.map((e) => e.season).unique();
+      console.log(seasons)
       return seasons.map((s) => {
         return (
           <option value={s} key={s}>
@@ -19,18 +21,22 @@ function SelectedShowContainer(props) {
   }
 
   function mapEpisodes() {
-    return props.episodes.map((e) => {
-      if (e.season == selectedSeason) {
-        return <Episode eachEpisode={e} key={e.id} />;
+    console.log(selectedSeason)
+    return props.allEpisodes.map((e) => {
+      if (e.season === selectedSeason) {
+        return <Episode myEpisode={e} key={e.id} />;
       }
+      return true; //'expects value to be returned at end of arrow function
     });
   }
 
   function handleSelectionChange(e) {
-    selectedSeason = e.target.value;
+    console.log(e.target.value)
+    setSelectedSeason(e.target.value);
   }
 
-  const { selectedShow } = props;
+  const selectedShow = props.selectedShow;
+  // console.log(selectedShow)
 
   return (
     <div style={{ position: "static" }}>
@@ -48,7 +54,7 @@ function SelectedShowContainer(props) {
   );
 }
 
-export SelectedShowContainer;
+export default SelectedShowContainer;
 
 Array.prototype.unique = function () {
   const arr = [];

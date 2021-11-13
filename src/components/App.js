@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "semantic-ui-react";
-import Adapter from "../Adapter";
+//import Adapter from "../Adapter";
 import TVShowList from "./TVShowList";
 import Nav from "./Nav";
 import SelectedShowContainer from "./SelectedShowContainer";
@@ -13,7 +13,11 @@ function App() {
   const [filterByRating, setFilterByRating] = useState("");
 
   useEffect(() => {
-    Adapter.getShows().then((shows) => setShows(shows));
+    // console.log(Adapter.getShows())
+    // Adapter.getShows().then((shows) => setShows(shows));
+    fetch("http://api.tvmaze.com/shows")
+    .then(res => res.json())
+    .then((shows) => setShows(shows));
   }, []);
 
   useEffect(() => {
@@ -31,17 +35,28 @@ function App() {
   }
 
   function selectShow(show) {
-    Adapter.getShowEpisodes(show.id).then((episodes) => {
+    // Adapter.getShowEpisodes(show.id).then((episodes) => {
+    //   setSelectedShow(show);
+    //   setEpisodes(episodes);
+    // });
+    fetch(`https://hidden-eyrie-69734.herokuapp.com/http://api.tvmaze.com/shows/${show.id}/episodes`)
+    .then(res => res.json())
+    .then((episodes) => {
       setSelectedShow(show);
       setEpisodes(episodes);
-    });
+    })
   }
 
   let displayShows = shows;
   if (filterByRating) {
     displayShows = displayShows.filter((s) => {
-      s.rating.average >= filterByRating;
+      return s.rating.average >= filterByRating;
     });
+  }
+  if (searchTerm) {
+    displayShows = displayShows.filter((s) => {
+      return s.name.toLowerCase().includes(searchTerm);
+    })
   }
 
   return (

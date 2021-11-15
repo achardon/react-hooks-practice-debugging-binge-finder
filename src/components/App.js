@@ -9,6 +9,7 @@ function App() {
   const [shows, setShows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedShow, setSelectedShow] = useState("");
+  const [selectedSeason, setSelectedSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
   const [filterByRating, setFilterByRating] = useState("");
 
@@ -39,6 +40,7 @@ function App() {
     //   setSelectedShow(show);
     //   setEpisodes(episodes);
     // });
+    // setSelectedSeason(1)
     fetch(`https://hidden-eyrie-69734.herokuapp.com/http://api.tvmaze.com/shows/${show.id}/episodes`)
     .then(res => res.json())
     .then((episodes) => {
@@ -72,6 +74,8 @@ function App() {
             <SelectedShowContainer
               selectedShow={selectedShow}
               allEpisodes={episodes}
+              selectedSeason={selectedSeason}
+              setSelectedSeason={setSelectedSeason}
             />
           ) : (
             <div />

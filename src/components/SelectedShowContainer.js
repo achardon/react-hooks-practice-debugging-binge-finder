@@ -26,7 +26,7 @@ function SelectedShowContainer(props) {
   }
 
   function handleSelectionChange(e) {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     props.setSelectedSeason(e.target.value);
   }
 
@@ -41,7 +41,7 @@ function SelectedShowContainer(props) {
       <p>Premiered: {selectedShow.premiered}</p>
       <p>Status: {selectedShow.status}</p>
       <p>Average Rating: {selectedShow.rating.average}</p>
-      <select style={{ display: "block" }} onChange={handleSelectionChange}>
+      <select style={{ display: "block" }} onChange={handleSelectionChange} value={props.selectedSeason}>
         {mapSeasons()}
       </select>
       {mapEpisodes()}

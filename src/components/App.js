@@ -40,14 +40,17 @@ function App() {
     //   setSelectedShow(show);
     //   setEpisodes(episodes);
     // });
-    // setSelectedSeason(1)
     fetch(`https://hidden-eyrie-69734.herokuapp.com/http://api.tvmaze.com/shows/${show.id}/episodes`)
     .then(res => res.json())
     .then((episodes) => {
       setSelectedShow(show);
       setEpisodes(episodes);
+      setSelectedSeason(1)
     })
   }
+
+  console.log(selectedSeason)
+
 
   let displayShows = shows;
   if (filterByRating) {
